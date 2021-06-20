@@ -1,0 +1,133 @@
+<!DOCTYPE  html>
+<html>
+
+<head>
+    <title> Money </title>
+</head>
+
+<body>
+    <style>
+        h2 {
+            color: blue
+        }
+    </style>
+    <h2>
+        <b>
+            <div align="center">Overtime</div>
+        </b>
+    </h2>
+    <div id="formDetail" align="center">
+        <table style="border-collapse: collapse; width: 100%; height: 68px;" border="0">
+            <tbody>
+                <tr style="height: 17px;">
+                    <td style="width: 33.3333%; height: 17px;">&nbsp;</td>
+                    <td style="width: 33.3333%; height: 17px;">&nbsp;</td>
+                    <td style="width: 33.3333%; height: 17px;">&nbsp;</td>
+                </tr>
+                <tr style="height: 17px;">
+                    <td style="width: 33.3333%; text-align: right; height: 17px;">Name:&nbsp;</td>
+                    <td style="width: 33.3333%; height: 17px;"><input type="text" name="nameStaff" id="nameStaff"></td>
+                    <td style="width: 33.3333%; height: 17px;">&nbsp;</td>
+                </tr>
+                <tr style="height: 17px;">
+                    <td style="width: 33.3333%; text-align: right; height: 17px;">Year of services</td>
+                    <td style="width: 33.3333%; height: 17px;"><input type="text" name="yearOfService" id="yearOfService"></td>
+                    <td style="width: 33.3333%; height: 17px;">&nbsp;</td>
+                </tr>
+                <tr style="height: 17px;">
+                    <td style="width: 33.3333%; text-align: right; height: 17px;">Total overtime</td>
+                    <td style="width: 33.3333%; height: 17px;"><input type="text" name="totalOvertime" id="totalOvertime"></td>
+                    <td style="width: 33.3333%; height: 17px;">&nbsp;</td>
+                </tr>
+                <tr style="height: 17px;">
+                    <td style="width: 33.3333%; text-align: right; height: 17px;">Rate per hour</td>
+                    <td style="width: 33.3333%; height: 17px;"><input type="text" name="ratePerHour" id="ratePerHour"></td>
+                    <td style="width: 33.3333%; height: 17px;">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="grossPay()">Calculate</button>
+    </div>
+    <br><br>
+    <div id="result" align="center">
+    </div>
+
+    <script type="text/javascript">
+        function countSeniority(yearOfService) {
+            if (yearOfService <= 1) {
+                //yos 0-1
+                const multiplierSeniority = 1;
+                return multiplierSeniority;
+
+            } else if (yearOfService <= 3) {
+                const multiplierSeniority = 1.1;
+                return multiplierSeniority;
+
+            } else if (yearOfService <= 5) {
+                const multiplierSeniority = 1.2;
+                return multiplierSeniority;
+
+            } else {
+                //6 year or more
+                const multiplierSeniority = 1.7;
+                return multiplierSeniority;
+
+            }
+        }
+
+        function countOT(overtimeHour) {
+            if (overtimeHour <= 1) {
+                //yos 0-1
+                const multiplierOvertime = 2;
+                return multiplierOvertime;
+
+            } else if (overtimeHour <= 3) {
+                const multiplierOvertime = 2.1;
+                return multiplierOvertime;
+
+            } else {
+                //6 year or more
+                const multiplierOvertime = 3;
+                return multiplierOvertime;
+
+            }
+        }
+
+
+
+        function grossPay() {
+            const nameStaff = document.getElementById("nameStaff").value;
+            const yearOfService = document.getElementById("yearOfService").value;
+            const overtimeHour = document.getElementById("totalOvertime").value;
+            const ratePerHour = document.getElementById("ratePerHour").value;
+            console.log(`nameStaff`, nameStaff, yearOfService, overtimeHour, ratePerHour)
+            const multipleYearOfService = countSeniority(yearOfService);
+            const multipleOvertimeHour = countOT(overtimeHour);
+            if (overtimeHour <= 1) {
+                const secondHour = overtimeHour - 1;
+                const firstHourRate = (1 * multipleYearOfService) * (yearOfService * ratePerHour);
+                const secondHourRate = (secondHour * multipleYearOfService) * (multipleOvertimeHour * ratePerHour);
+                var grossSalary = (firstHourRate + secondHourRate);
+
+                document.getElementById("result").innerHTML = '<> Total overtime wages for the day is RM ' + grossSalary.toFixed(2) + '</h3>';
+
+            } else if (overtimeHour <= 3) {
+                const secondHour = overtimeHour - 1;
+                const firstHourRate = (1 * multipleYearOfService) * (yearOfService * ratePerHour);
+                const secondHourRate = (secondHour * multipleYearOfService) * (multipleOvertimeHour * ratePerHour);
+                var grossSalary = (firstHourRate + secondHourRate);
+                document.getElementById("result").innerHTML = '<h3> Total overtime wages for the day is RM ' + grossSalary.toFixed(2) + '</h3>';
+
+            } else {
+                const secondHour = overtimeHour - 1;
+                const firstHourRate = (1 * multipleYearOfService) * (yearOfService * ratePerHour);
+                const secondHourRate = (secondHour * multipleYearOfService) * (multipleOvertimeHour * ratePerHour);
+                var grossSalary = (firstHourRate + secondHourRate);
+                document.getElementById("result").innerHTML = '<> Total overtime wages for the day is RM ' + grossSalary.toFixed(2) + '</h3>';
+
+            }
+        }
+    </script>
+</body>
+
+</html>
